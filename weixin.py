@@ -53,15 +53,21 @@ class index:
             fromuser = soup.FromUserName.text
             touser = soup.ToUserName.text
             frommsgtype = soup.MsgType.text
-            keyword = soup.Content.text.strip()
             curtime = int(time.time())
-            echostr = keyword
         except Exception as e:
             echostr = "parse fail", e
             self.wxlogger.error("parse fail %s" % (e))
         self.wxlogger.info("poststr[%s]" % (poststr))
-        print poststr
-        return self.render.reply_text(fromuser, touser, curtime, u'''我现在还在开发中，还没有什么功能，您刚才说的是：''' + keyword)
+
+        if "text" == frommsgtype:
+            keyword = soup.Content.text.strip()
+            echostr = keyword
+            return self.render.reply_text(fromuser, touser, curtime, u'''我现在还在开发中，还没有什么功能，您刚才说的是：''' + keyword)
+        elif "event" == frommsgtype:
+            fromevent = soup.Event.text
+            return self.render.reply_text(fromuser, touser, curtime, u'''您好，欢迎关注!''')
+        else:
+            return self.render.reply_text(fromuser, touser, curtime, u'''Unknown msg...''')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
