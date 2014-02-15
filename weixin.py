@@ -22,9 +22,9 @@ class index:
         if loggers.get(name):
             return loggers.get(name)
         else:
-            logger=logging.getLogger(name)
+            logger = logging.getLogger(name)
             logger.setLevel(logging.DEBUG)
-            handler=logging.FileHandler(filename='wxrun.log', mode='a')
+            handler = logging.FileHandler(filename='wxrun.log', mode='a')
             formatter = logging.Formatter('[%(name)s:%(lineno)s] - %(asctime)s - %(levelname)s: %(message)s')
             handler.setFormatter(formatter)
             logger.addHandler(handler)
@@ -34,11 +34,11 @@ class index:
     def GET(self):
         data = web.input()
         signature = data.signature
-        timestamp=data.timestamp
-        nonce=data.nonce
-        echostr=data.echostr
-        token=conf.TOKEN
-        list=[token, timestamp,nonce]
+        timestamp = data.timestamp
+        nonce = data.nonce
+        echostr = data.echostr
+        token = conf.TOKEN
+        list = [token, timestamp,nonce]
         list.sort()
         sha1=hashlib.sha1()
         map(sha1.update, list)
