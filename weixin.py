@@ -4,6 +4,7 @@ import web
 import time
 from bs4 import BeautifulSoup
 import logging, logging.handlers
+import config
 
 urls = ('/', 'index')
 loggers = {}
@@ -29,6 +30,21 @@ class index:
             logger.addHandler(handler)
             loggers.update(dict(name=logger))
             return logger
+
+    def GET(self):
+        data = web.input()
+        signature = data.signature
+        timestamp=data.timestamp
+        nonce=data.nonce
+        echostr=data.echostr
+        token=conf.TOKEN
+        list=[token, timestamp,nonce]
+        list.sort()
+        sha1=hashlib.sha1()
+        map(sha1.update, list)
+        hashcode=sha1.hexdigest()
+        if hashcode == signature:
+            return echostr
 
     def POST(self):
         try:
