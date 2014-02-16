@@ -67,7 +67,7 @@ class index:
             fromevent = soup.Event.text
             return self.render.reply_text(fromuser, touser, curtime, u'''您好，欢迎关注!''')
         else:
-            return self.render.reply_text(fromuser, touser, curtime, u'''Unknown msg...''')
+            return self.render.reply_text(fromuser, touser, curtime, u'''您好，未知消息。。。''')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
