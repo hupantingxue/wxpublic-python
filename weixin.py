@@ -2,11 +2,14 @@
 import os
 import web
 import time
+import conf
 from bs4 import BeautifulSoup
 import logging, logging.handlers
 
 urls = ('/', 'index')
 loggers = {}
+
+db = web.database(dbn='mysql', user=conf.DB_USER, pw=conf.DB_PWD, db=conf.DB_NAME)
 
 class index:
     def __init__(self):
@@ -40,12 +43,14 @@ class index:
             keyword = soup.Content.text.strip()
             curtime = int(time.time())
             echostr = keyword
+            #query table 'wx_test' info
+            infos = db.select('wx_test', where='title like %$mon%', order='id', vars=locals())
         except Exception as e:
             echostr = "parse fail", e
             self.wxlogger.error("parse fail %s" % (e))
         self.wxlogger.info("poststr[%s]" % (poststr))
         print poststr
-        return self.render.reply_text(fromuser, touser, curtime, u'''我现在还在开发中，还没有什么功能，您刚才说的是：''' + keyword)
+        return self.render.reply_text(fromuser, touser, curtime, infos)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
