@@ -2,7 +2,7 @@ wxpublic-python
 ===============
 
 Wechat public platform send/response message with python
-
+<h3>Usage</h3>
 <p>It depends on this library:</p>
 <ul>
 <li>BeautifulSoup installed as below:<pre><code>pip install beautifulsoup4</pre></code></li>
@@ -11,3 +11,8 @@ Wechat public platform send/response message with python
 
 <p>run server as below:</p>
 <pre><code>python weixin.py  port</pre></code>
+
+<h3>Author</h3>
+hupantingxue
+<h3>License</h3>
+Apache 2.0

@@ -58,7 +58,7 @@ class index:
             curtime = int(time.time())
             echostr = keyword
             #query table 'wx_test' info
-            infos = db.select('wx_test', where='title like %$mon%', order='id', vars=locals())
+            infos = db.select('wx_test', where='title like $key', order='id', vars={'key':'%'+keyword+'%'})
         except Exception as e:
             echostr = "parse fail", e
             self.wxlogger.error("parse fail %s" % (e))
